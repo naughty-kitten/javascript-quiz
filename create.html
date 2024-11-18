@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create - JavaScript Quiz</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            scrollbar-color: #066 #335;
+        }
+        body {
+            background-color: #335;
+            color: #0ff;
+            overflow: scroll;
+        }
+        a, a:visited {
+            color: #fff;
+        }
+        a:hover {
+            color: #0ff;
+        }
+        hr {
+            background-color: #066;
+            border: none;
+            height: 5px;
+        }
+        #json-output {
+            background-color: #224;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        #length-input {
+                width: 250px;
+                border-radius: 4px;
+                appearance: none;
+                background: #222; /* Grey background */
+                outline: none; /* Remove outline */
+                opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+                transition: opacity .2s;
+        }
+        #length-input::-moz-range-thumb {
+            width: 25px; /* Set a specific slider handle width */
+            height: 25px; /* Slider handle height */
+            background: #0ff; /* Green background */
+            cursor: pointer; /* Cursor on hover */
+        }
+        #length-input::-webkit-slider-thumb {
+            -webkit-appearance: none; /* Override default look */
+            appearance: none;
+            width: 25px; /* Set a specific slider handle width */
+            height: 25px; /* Slider handle height */
+            background: #0ff; /* Green background */
+            cursor: pointer; /* Cursor on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>This function has not been implemented, please return to the home page.</h1>
+    <a href="./index.html">Return to <strong>home page</strong></a>
+    <br><br>
+    <hr>
+    <input id="length-input" type="range"  min="1" max="10" value="5" onchange="updateLength()">
+    <label for="length-input" id="length-display">Quiz length: 5</label>
+    <input type="text" id="json-input" onchange="updateJson()">
+    <label for="json-input">Enter question</label>
+    <p id="json-output">JSON_DATA</p>
+    <p>This site uses JavaScript for functionality.<br>It will not operate without JavaScript.</p>
+    <script>
+        const jsonOutput = document.getElementById('json-output');
+        const jsonInput = document.getElementById('json-input');
+        const lengthInput = document.getElementById('length-input');
+        const lengthDisplay = document.getElementById('length-display');
+        
+        function updateJson() {
+        }
+
+        function updateLength() {
+            lengthDisplay.innerText = 'Quiz length: ' + lengthInput.value
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Quiz</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            scrollbar-color: #060 #353;
+        }
+        body {
+            background-color: #353;
+            color: #ff0;
+            overflow: scroll;
+        }
+        input {
+            background-color: #242;
+            border: 3px inset #050;
+            color: #fff;
+            width: 220px;
+            height: 35px;
+            font-size: 24px;
+            margin-top: 30px;
+        }
+        label {
+            font-size: 24px;
+        }
+        button, a {
+            width: 500px;
+            height: 170px;
+            font-size: 30px;
+            word-wrap: break-word;
+            border: 6px outset #242;
+            background-color: #030;
+            margin: 10px;
+            cursor: pointer;
+        }
+        a, a:visited {
+            padding: 5px 50px 5px 50px;
+            color: #fff;
+        }
+        button.small, a.small {
+            width: 320px;
+            height: 50px;
+            font-size: 20px;
+        }
+        .info {
+            font-size: 32px;
+        }
+        table {
+            margin: auto;
+            width: 900px;
+        }
+        hr {
+            background-color: #060;
+            border: none;
+            height: 5px;
+        }
+        button:hover, a:hover {
+            border: 6px inset #242;
+            color: #ff0;
+        }
+        input::placeholder {
+            color: #555;
+        }
+        input:focus {
+            outline: none;
+        }
+        #question-block {
+            text-align: center;
+            margin-top: -30px;
+            font-size: 100px;
+            width: 1044px;
+            word-wrap: break-word;
+            color: #fff;
+        }
+        #question-debug {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #242;
+            border: 3px inset #050;
+        }
+    </style>
+</head>
+<body>
+    <noscript>This page will not operate without JavaScript.</noscript>
+    <table>
+        <tr><td colspan="2"><p id="question-block">QUESTION</p></td></tr>
+        <tr><td><button id="btn1" onclick="button1()">ANS_BTN_1</button></td><td><button id="btn2" onclick="button2()">ANS_BTN_2</button></td></tr>
+        <tr><td><button id="btn3" onclick="button3()">ANS_BTN_3</button></td><td><button id="btn4" onclick="button4()">ANS_BTN_4</button></td></tr>
+    </table>
+    <p class="info" id="answer-log"></p>
+    <hr>
+    <!-- SECTION FOR DEBUGGING, KEEP DISABLED.
+    <button class="small" onclick='fillJson(`{"metadata":{"length":10,"difficulty":5},"content":{"q1":{"question":"What does CPU stand for?","ans1":"Central Processing Unit","ans2":"Computer Processing Unit","ans3":"Central Programming Unit","ans4":"Computer Programming Unit","correct":1},"q2":{"question":"Which part of a computer is considered the brain?","ans1":"RAM","ans2":"CPU","ans3":"Hard Drive","ans4":"GPU","correct":2},"q3":{"question":"Which company created the Windows operating system?","ans1":"Apple","ans2":"IBM","ans3":"Microsoft","ans4":"Google","correct":3},"q4":{"question":"What does HTTP stand for?","ans1":"HyperText Transfer Protocol","ans2":"HyperText Transfer Program","ans3":"HyperText Transmission Protocol","ans4":"HyperTransfer Text Protocol","correct":1},"q5":{"question":"In computer science, what is Boolean used to represent?","ans1":"True or False values","ans2":"Numbers","ans3":"Characters","ans4":"Text","correct":1},"q6":{"question":"Which programming language is known for its snake logo?","ans1":"Java","ans2":"Python","ans3":"Ruby","ans4":"C++","correct":2},"q7":{"question":"What does RAM stand for?","ans1":"Random Access Memory","ans2":"Read Access Memory","ans3":"Real Application Memory","ans4":"Random Application Management","correct":1},"q8":{"question":"What is the main function of an operating system?","ans1":"To connect to the internet","ans2":"To manage computer hardware and software","ans3":"To create programs","ans4":"To store data permanently","correct":2},"q9":{"question":"Which of these is not an example of an operating system?","ans1":"Linux","ans2":"Windows","ans3":"MacOS","ans4":"Oracle","correct":4},"q10":{"question":"What does GPU stand for?","ans1":"General Processing Unit","ans2":"Graphics Processing Unit","ans3":"Graphical Performance Unit","ans4":"Global Processing Unit","correct":2}}}`);initializeButtons()'>Tech 1 (Built-in)</button>
+    <button class="small" onclick='fillJson(`{"metadata":{"length":10,"difficulty":5},"content":{"q1":{"question":"What does URL stand for","ans1":"Uniform Resource Locator","ans2":"Universal Resource Link","ans3":"Uniform Retrieval Link","ans4":"Universal Reference Locator","correct":1},"q2":{"question":"Which programming language is used for web development","ans1":"Python","ans2":"JavaScript","ans3":"C++","ans4":"Java","correct":2},"q3":{"question":"In computing, what does SSD stand for","ans1":"Solid State Device","ans2":"System Storage Disk","ans3":"Solid State Drive","ans4":"Super Speed Disk","correct":3},"q4":{"question":"What is the primary purpose of a firewall in computer networks","ans1":"To store files securely","ans2":"To speed up internet access","ans3":"To monitor CPU temperature","ans4":"To block unauthorized access","correct":4},"q5":{"question":"What programming language is used for web development","ans1":"Ruby","ans2":"Java","ans3":"C#","ans4":"PHP","correct":4},"q6":{"question":"Which company developed the MacOS operating system","ans1":"Apple","ans2":"Microsoft","ans3":"Google","ans4":"IBM","correct":1},"q7":{"question":"What does HTML stand for","ans1":"HyperText Markup Language","ans2":"HighText Machine Language","ans3":"Hyperloop Machine Language","ans4":"HyperText Machine Language","correct":1},"q8":{"question":"Which type of malware replicates itself and spreads to other devices","ans1":"Trojan","ans2":"Virus","ans3":"Ransomware","ans4":"Adware","correct":2},"q9":{"question":"What does IoT stand for in technology","ans1":"Internet of Things","ans2":"Input-output Technology","ans3":"Internet of Tools","ans4":"Integrated Operation Technology","correct":1},"q10":{"question":"In programming, which symbol is commonly used to denote comments","ans1":"\u002f\u002f","ans2":"##","ans3":"!!","ans4":"%%","correct":1}}}`);initializeButtons()'>Tech 2 (Built-in)</button>
+    -->
+    <input type="text" placeholder="Enter JSON data" id="json-input" onchange="updateJson();initializeButtons()">
+    <label for="json-input">Enter JSON list data</label>
+    <p class="info" id="question-count"></p>
+    <p class="info" id="difficulty"></p>
+    <button class="small" id="debug-collapse" onclick="debugCollapse()">Show debug info</button>
+    <a href="./create.html" class="small">Create my own quiz</a>
+    <p style="display:none;" id="question-debug"></p>
+    <p>This site uses JavaScript for functionality.<br>It will not operate without JavaScript.</p>
+    <script>
+        const jsonInput = document.getElementById('json-input');
+        const questionCount = document.getElementById('question-count');
+        const difficulty = document.getElementById('difficulty');
+        const questionBlock = document.getElementById('question-block');
+        const btn1 = document.getElementById('btn1');
+        const btn2 = document.getElementById('btn2');
+        const btn3 = document.getElementById('btn3');
+        const btn4 = document.getElementById('btn4');
+        const ansLog = document.getElementById('answer-log');
+        const debug = document.getElementById('question-debug');
+        const debugCollapseBlock = document.getElementById('debug-collapse');
+        const queryParams = new URLSearchParams(window.location.search);
+        var currentQuestion = 1;
+        var debugOpen = false;
+
+        if (queryParams !== undefined) {
+            fillJson(decodeURIComponent(queryParams).replace('json=', '').replaceAll('+', ' '));
+            initializeButtons();
+            updateJson();
+        }
+        function initializeButtons() { 
+            btn1.innerHTML = JSON.parse(jsonInput.value).content.q1.ans1;
+            btn2.innerHTML = JSON.parse(jsonInput.value).content.q1.ans2;
+            btn3.innerHTML = JSON.parse(jsonInput.value).content.q1.ans3;
+            btn4.innerHTML = JSON.parse(jsonInput.value).content.q1.ans4;
+            questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q1.question;
+        }
+        function button1() {
+            nextQuestion(1);
+        }
+
+        function button2() {
+            nextQuestion(2);
+        }
+
+        function button3() {
+            nextQuestion(3);
+        }
+
+        function button4() {
+            nextQuestion(4);
+        }
+
+        function fillJson(jsonCode) {
+            jsonInput.value = jsonCode;
+            updateJson();
+        }
+        
+        function debugCollapse() {
+            debugOpen = !debugOpen;
+            if (debugOpen) {
+                debug.style.display = 'block';
+                debugCollapseBlock.innerHTML = 'Close panel';
+            } else {
+                debug.style.display = 'none';
+                debugCollapseBlock.innerHTML = 'Show debug info';
+            }
+        }
+
+        function checkCorrect(inputBtn) {
+            var isCorrect = false;
+            switch (currentQuestion) {
+                case 1:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q1.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q2.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q2.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q2.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q2.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q2.question;
+                    break;
+                case 2:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q2.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q3.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q3.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q3.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q3.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q3.question;
+                    break;
+                case 3:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q3.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q4.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q4.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q4.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q4.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q4.question;
+                    break;
+                case 4:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q4.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q5.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q5.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q5.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q5.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q5.question;
+                    break;
+                case 5:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q5.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q6.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q6.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q6.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q6.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q6.question;
+                    break;
+                case 6:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q6.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q7.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q7.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q7.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q7.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q7.question;
+                    break;
+                case 7:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q7.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q8.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q8.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q8.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q8.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q8.question;
+                    break;
+                case 8:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q8.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q9.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q9.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q9.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q9.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q9.question;
+                    break;
+                case 9:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q9.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q10.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q10.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q10.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q10.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q10.question;
+                    break;
+                case 10:
+                    isCorrect = (inputBtn === JSON.parse(jsonInput.value).content.q10.correct);
+                    btn1.innerHTML = JSON.parse(jsonInput.value).content.q1.ans1;
+                    btn2.innerHTML = JSON.parse(jsonInput.value).content.q1.ans2;
+                    btn3.innerHTML = JSON.parse(jsonInput.value).content.q1.ans3;
+                    btn4.innerHTML = JSON.parse(jsonInput.value).content.q1.ans4;
+                    questionBlock.innerHTML = JSON.parse(jsonInput.value).content.q1.question;
+                    break;
+            
+                default:
+                    break;
+            }
+            if (isCorrect) {
+                ansLog.innerHTML += ' ' + currentQuestion + ':correct';
+            } else {
+                ansLog.innerHTML += ' ' + currentQuestion + ':incorrect';
+            }
+            if (currentQuestion == JSON.parse(jsonInput.value).metadata.length) {
+                window.alert('Quiz over! \n' + ansLog.innerHTML);
+                ansLog.innerHTML = '';
+                debug.innerHTML = '';
+            }
+        }
+
+        function nextQuestion(btn) {
+            if (currentQuestion >= JSON.parse(jsonInput.value).metadata.length) {
+                checkCorrect(btn);
+                currentQuestion = 1;
+            } else {
+                checkCorrect(btn);
+                currentQuestion++;
+            }
+        }
+
+        function updateJson() {
+            try {
+                questionCount.innerHTML = JSON.parse(jsonInput.value).metadata.length + ' Questions';
+                difficulty.innerHTML = JSON.parse(jsonInput.value).metadata.difficulty + '/10 Difficulty';
+                debug.innerHTML = JSON.parse(jsonInput.value).content.q1.question + ' = ' + JSON.parse(jsonInput.value).content.q1.ans1 + ', ' + JSON.parse(jsonInput.value).content.q1.ans2 + ', ' + JSON.parse(jsonInput.value).content.q1.ans3 + ', ' + JSON.parse(jsonInput.value).content.q1.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q1.correct + '<br>';
+                if (JSON.parse(jsonInput.value).metadata.length >= 2) {
+                    debug.innerHTML += JSON.parse(jsonInput.value).content.q2.question + ' = ' + JSON.parse(jsonInput.value).content.q2.ans1 + ', ' + JSON.parse(jsonInput.value).content.q2.ans2 + ', ' + JSON.parse(jsonInput.value).content.q2.ans3 + ', ' + JSON.parse(jsonInput.value).content.q2.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q2.correct + '<br>';
+                }
+                if (JSON.parse(jsonInput.value).metadata.length >= 3) {
+                    debug.innerHTML += JSON.parse(jsonInput.value).content.q3.question + ' = ' + JSON.parse(jsonInput.value).content.q3.ans1 + ', ' + JSON.parse(jsonInput.value).content.q3.ans2 + ', ' + JSON.parse(jsonInput.value).content.q3.ans3 + ', ' + JSON.parse(jsonInput.value).content.q3.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q3.correct + '<br>';
+                }
+                if (JSON.parse(jsonInput.value).metadata.length >= 4) {
+                    debug.innerHTML += JSON.parse(jsonInput.value).content.q4.question + ' = ' + JSON.parse(jsonInput.value).content.q4.ans1 + ', ' + JSON.parse(jsonInput.value).content.q4.ans2 + ', ' + JSON.parse(jsonInput.value).content.q4.ans3 + ', ' + JSON.parse(jsonInput.value).content.q4.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q4.correct + '<br>';
+                }
+                if (JSON.parse(jsonInput.value).metadata.length >= 5) {
+                    debug.innerHTML += JSON.parse(jsonInput.value).content.q5.question + ' = ' + JSON.parse(jsonInput.value).content.q5.ans1 + ', ' + JSON.parse(jsonInput.value).content.q5.ans2 + ', ' + JSON.parse(jsonInput.value).content.q5.ans3 + ', ' + JSON.parse(jsonInput.value).content.q5.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q5.correct + '<br>';
+                }
+                if (JSON.parse(jsonInput.value).metadata.length >= 6) {
+                    debug.innerHTML += JSON.parse(jsonInput.value).content.q6.question + ' = ' + JSON.parse(jsonInput.value).content.q6.ans1 + ', ' + JSON.parse(jsonInput.value).content.q6.ans2 + ', ' + JSON.parse(jsonInput.value).content.q6.ans3 + ', ' + JSON.parse(jsonInput.value).content.q6.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q6.correct + '<br>';
+                }
+                if (JSON.parse(jsonInput.value).metadata.length >= 7) {
+                    debug.innerHTML += JSON.parse(jsonInput.value).content.q7.question + ' = ' + JSON.parse(jsonInput.value).content.q7.ans1 + ', ' + JSON.parse(jsonInput.value).content.q7.ans2 + ', ' + JSON.parse(jsonInput.value).content.q7.ans3 + ', ' + JSON.parse(jsonInput.value).content.q7.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q7.correct + '<br>';
+                }
+                if (JSON.parse(jsonInput.value).metadata.length >= 8) {
+                    debug.innerHTML += JSON.parse(jsonInput.value).content.q8.question + ' = ' + JSON.parse(jsonInput.value).content.q8.ans1 + ', ' + JSON.parse(jsonInput.value).content.q8.ans2 + ', ' + JSON.parse(jsonInput.value).content.q8.ans3 + ', ' + JSON.parse(jsonInput.value).content.q8.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q8.correct + '<br>';
+                }
+                if (JSON.parse(jsonInput.value).metadata.length >= 9) {
+                    debug.innerHTML += JSON.parse(jsonInput.value).content.q9.question + ' = ' + JSON.parse(jsonInput.value).content.q9.ans1 + ', ' + JSON.parse(jsonInput.value).content.q9.ans2 + ', ' + JSON.parse(jsonInput.value).content.q9.ans3 + ', ' + JSON.parse(jsonInput.value).content.q9.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q9.correct + '<br>';
+                }
+                if (JSON.parse(jsonInput.value).metadata.length == 10) {
+                    debug.innerHTML += JSON.parse(jsonInput.value).content.q10.question + ' = ' + JSON.parse(jsonInput.value).content.q10.ans1 + ', ' + JSON.parse(jsonInput.value).content.q10.ans2 + ', ' + JSON.parse(jsonInput.value).content.q10.ans3 + ', ' + JSON.parse(jsonInput.value).content.q10.ans4 + ' / ' + JSON.parse(jsonInput.value).content.q10.correct + '<br>';
+                }
+            } catch (error) {
+                questionBlock.innerHTML = '<strong>JSON ERROR</strong>';
+                btn1.innerHTML = 'Fix error to play';
+                btn2.innerHTML = 'Fix error to play';
+                btn3.innerHTML = 'Fix error to play';
+                btn4.innerHTML = 'Fix error to play';
+                debug.innerHTML = error;
+            }
+        }
+    </script>
+</body>
+</html>
